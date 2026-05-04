@@ -2,6 +2,8 @@
 #include "mpu.h"
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
+#include <xtensa-esp32-elf/bits/ctype_base.h>
+
 #include "config.h"
 
 MPU::MPU() {
@@ -62,7 +64,7 @@ float MPU::angle() {
 
     _lastTime = now;
 
-    return _angle - _offset;
+    return _angle - _offset + ANGLE_OFFSET;
 }
 
 float MPU::filter(float accelAngle, float gyrongle) {
@@ -80,4 +82,17 @@ float MPU::offset() {
     }
     _offset = sum / 100;
     return _offset;
+}
+
+void MPU::printData() {
+    sensors_event_t a, g ,temp;
+    _mpu.getEvent(&a, &g, &temp);
+
+    Serial.println("x:");
+    Serial.println(a.acceleration.x);
+    Serial.println("y:");
+    Serial.println(a.acceleration.y);
+    Serial.println("z:");
+    Serial.println(a.acceleration.z);
+
 }

@@ -35,6 +35,9 @@ void Balancer::update() {
     float output = _pid.output(error);
     output = constrain(output, -255, 255);
 
+    if (output > 0 && output < 80) output = 80;
+    if (output < 0 && output > -80) output = 80;
+
     if (output > 0) {
         forward(int(output));
     }else if (output < 0) {
@@ -48,4 +51,12 @@ bool Balancer::init() {
     _mpu.init();
     _mpu.calibrate();
     return true;
+}
+
+float Balancer::getAngle() {
+    return _mpu.angle()*180/PI;
+}
+
+void Balancer::printData() {
+    _mpu.printData();
 }

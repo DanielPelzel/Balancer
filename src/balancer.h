@@ -11,6 +11,7 @@ private:
     float _targetAngle;
     MPU _mpu;
     PID _pid;
+    float _angle;
 public:
     Balancer();
     void forward(int speed);
@@ -18,4 +19,7 @@ public:
     void stop();
     void update();
     bool init();
+    float getAngle();
+    void printData();
+
 };
