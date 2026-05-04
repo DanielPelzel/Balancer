@@ -25,4 +25,9 @@
 #define SCL 22
 #define SDA 21
 
+#define PWM_FREQ 1000
+#define PWM_RES  8
+#define PWM_CH_A 0
+#define PWM_CH_B 1
+
 #endif
