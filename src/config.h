@@ -30,4 +30,14 @@
 #define PWM_CH_A 0
 #define PWM_CH_B 1
 
+//MPU Range
+#define MPU_accel_Range MPU6050_RANGE_4_G
+#define MPU_gyro_Range MPU6050_RANGE_500_DEG
+#define MPU_filter_bandwidth MPU6050_BAND_44_HZ
+
+#define kp 1.0
+#define ki 0.0
+#define kd 0.0
+
+
 #endif
