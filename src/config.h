@@ -22,8 +22,8 @@
 #define Enc_B_L 34
 
 //MPU 6050
-#define SCL 22
-#define SDA 21
+#define SCL_PIN 22
+#define SDA_PIN 21
 
 #define PWM_FREQ 1000
 #define PWM_RES  8
@@ -35,9 +35,9 @@
 #define MPU_gyro_Range MPU6050_RANGE_500_DEG
 #define MPU_filter_bandwidth MPU6050_BAND_44_HZ
 
-#define kp 1.0
-#define ki 0.0
-#define kd 0.0
+constexpr float KP = 5.0f;
+constexpr float KI = 0.0f;
+constexpr float KD = 0.0f;
 
 
 #endif

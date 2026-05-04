@@ -1,4 +1,4 @@
-#include "Balancer.h"
+#include "balancer.h"
 #include "config.h"
 #include "motor.h"
 #include <Arduino.h>
@@ -10,7 +10,7 @@ Balancer::Balancer()
     ,_motorRechts(In3, In4, PWM_CH_B,ENB)
     ,_targetAngle(0.0f)
     , _mpu()
-    , _pid(kp, ki, kd)
+    , _pid(KP, KI, KD)
 { }
 
 
@@ -31,7 +31,21 @@ void Balancer::stop() {
 
 void Balancer::update() {
     float angle = _mpu.angle();
-    float errpop = angle - _targetAngle;
+    float error = angle - _targetAngle;
+    float output = _pid.output(error);
+    output = constrain(output, -255, 255);
 
+    if (output > 0) {
+        forward(int(output));
+    }else if (output < 0) {
+        backward(int(-output));
+    }else{
+        stop();
+    }
+}
 
+bool Balancer::init() {
+    _mpu.init();
+    _mpu.calibrate();
+    return true;
 }

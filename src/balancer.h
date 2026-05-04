@@ -17,4 +17,5 @@ public:
     void backward(int speed);
     void stop();
     void update();
+    bool init();
 };

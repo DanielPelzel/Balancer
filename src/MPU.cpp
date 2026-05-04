@@ -11,7 +11,7 @@ MPU::MPU() {
 }
 
 bool MPU::init() {
-    Wire.begin(SDA,SCL);
+    Wire.begin(SDA_PIN,SCL_PIN);
 
     if (!_mpu.begin()) {
         Serial.println("MPU6050 not found");
@@ -30,12 +30,18 @@ bool MPU::init() {
 }
 
 void MPU::calibrate() {
-    float sum = 0;
+    float sum = 0.0f;
+    _lastTime = millis();
+
     for (int i = 0; i < 100; i++) {
-        sum += angle();
+        sensors_event_t a, g ,temp;
+        _mpu.getEvent(&a, &g, &temp);
+        float accelAngle= atan2(a.acceleration.y, a.acceleration.z) * 180 / PI;
+        sum += accelAngle;
         delay(10);
     }
-    _offset = sum / 100.0f;
+    _offset = sum / 100;
+    Serial.println(_offset);
 }
 
 float MPU::angle() {

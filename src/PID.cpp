@@ -2,7 +2,7 @@
 #include "config.h"
 #include <Arduino.h>
 
-PID::PID(float kp, float ki, float kd) {
+PID::PID(float kp, float ki, float kd){
     _kp = kp;
     _ki = ki;
     _kd = kd;
@@ -20,13 +20,13 @@ float PID::output(float error) {
     _integral += error * dt;
 
 
-    _rate = (error - _lastError) / dt;
+    float _rate = (error - _lastError) / dt;
 
 
     //pid berechnen
     float p = _kp * error;
     float i = _ki * _integral;
-    float d = kd * _rate;
+    float d = _kd * _rate;
 
     //Werte aktuallisierne
     _lastError = error;

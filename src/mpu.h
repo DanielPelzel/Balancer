@@ -19,4 +19,5 @@ float offset();
 float filter(float accelAngle, float gyroAngle);
 void calibrate();
 
+
 };
