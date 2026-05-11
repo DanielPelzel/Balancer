@@ -50,12 +50,6 @@ SensorData MPU::readSensor(){
 }
 
 accAngles MPU::calculateAngles(SensorData data) {
-     //gyro Angles
-
-     unsigned long now  = millis();
-     float dt = (now-lastTime)/1000.0f;
-     lastTime = now;
-
 
      //acc angles
      angles.ax = atan2(data.ay, data.az) *180 / PI;
@@ -84,13 +78,13 @@ void MPU::calibrate() {
           SensorData data = readSensor();
           calculateAngles(data);
           sum += angles.drehachse;
-
-
-
      }
-
-     offset = sum /1000.0f;
-
-
+     offset = sum /100.0f;
 }
 
+float MPU::getAngle(){
+    SensorData data = readSensor();
+     calculateAngles(data);
+     filteredAngles f =filter(data);
+     return f.drehachse - offset;
+};
