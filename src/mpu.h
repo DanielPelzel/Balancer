@@ -4,20 +4,38 @@
 #include <Wire.h>
 
 
+struct SensorData {
+    float ax, ay, az;
+    float gx, gy, gz;
+};
+
+struct accAngles {
+    float ax, ay, az;
+};
+
+struct filteredAngles {
+    float ax, ay, az;
+};
+
+
 class MPU {
 private:
-    Adafruit_MPU6050 _mpu;
-    float _angle;
-    float _offset;
-    float _lastTime;
+    Adafruit_MPU6050 mpu;
+    accAngles angles;
+    filteredAngles filtered = {0.0f, 0.0f, 0.0f};
+    float angle;
+    float offset;
+    unsigned long lastTime;
+
+
+
 
 public:
-MPU();
-bool init();
-float angle();
-float offset();
-float filter(float accelAngle, float gyroAngle);
-void calibrate();
-void printData();
+    MPU();
+    bool init();
+    void calibrate();
+    SensorData readSensor();
+    accAngles calculateAngles(SensorData angles);
+    filteredAngles filter(SensorData data);
 
 };

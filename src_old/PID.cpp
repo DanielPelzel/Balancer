@@ -1,4 +1,4 @@
-#include "PID.h"
+#include "pid.h"
 #include "config.h"
 #include <Arduino.h>
 

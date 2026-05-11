@@ -1,4 +1,4 @@
-#include "Motor.h"
+#include "motor.h"
 #include "config.h"
 
 Motor::Motor(int in1, int in2, int pwmKanal, int enaPin) {

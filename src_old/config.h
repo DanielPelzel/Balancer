@@ -40,7 +40,5 @@ constexpr float KI = 0.00f;
 constexpr float KD = 0.0f;
 constexpr float ANGLE_OFFSET = 0.0f;
 
-#define drehachse ax //auswhählen zwischen ax ay und az
-
 
 #endif

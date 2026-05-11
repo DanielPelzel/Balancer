@@ -30,6 +30,7 @@ void Balancer::stop() {
 }
 
 void Balancer::update() {
+    _mpu.calibrate();
     float angle = _mpu.angle();
     float error = angle - _targetAngle;
     float output = _pid.output(error);

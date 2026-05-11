@@ -1,27 +1,22 @@
+//
+// Created by daniel-pelzel on 11.05.26.
+//
+
 #include <Arduino.h>
-
-#include "balancer.h"
 #include "config.h"
-#include "motor.h"
 #include "mpu.h"
-#include "pid.h"
-#include <Adafruit_Sensor.h>
-#include <Wire.h>
-#include <Adafruit_MPU6050.h>
 
-
-Balancer balancer;
-
-
+MPU mpu;
 
 void setup() {
     Serial.begin(115200);
-    balancer.init();
-
+    mpu.init();
 }
-
 void loop() {
-    balancer.update();
-    float angle  = balancer.getAngle();
-    Serial.println(angle);
+    SensorData data = mpu.readSensor();
+    accAngles angles = mpu.calculateAngles(data);
+    Serial.println("");
+    Serial.println(angles.ax);
+
+
 }
