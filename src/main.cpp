@@ -17,11 +17,11 @@ Balancer balancer;
 void setup() {
     Serial.begin(115200);
     balancer.init();
+
 }
 
 void loop() {
-    float angle = balancer.getAngle();
+    balancer.update();
+    float angle  = balancer.getAngle();
     Serial.println(angle);
-    delay(100);
-
 }
