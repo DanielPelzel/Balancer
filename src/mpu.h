@@ -37,6 +37,6 @@ public:
     SensorData readSensor();
     accAngles calculateAngles(SensorData angles);
     filteredAngles filter(SensorData data);
-    float getAngle();
+    float getError();
 
 };

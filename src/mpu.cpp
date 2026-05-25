@@ -82,7 +82,7 @@ void MPU::calibrate() {
      offset = sum /100.0f;
 }
 
-float MPU::getAngle(){
+float MPU::getError(){
     SensorData data = readSensor();
      calculateAngles(data);
      filteredAngles f =filter(data);

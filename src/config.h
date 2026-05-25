@@ -35,9 +35,9 @@
 #define MPU_gyro_Range MPU6050_RANGE_500_DEG
 #define MPU_filter_bandwidth MPU6050_BAND_44_HZ
 
-constexpr float KP = 3.0f;
-constexpr float KI = 0.00f;
-constexpr float KD = 0.0f;
+constexpr float KP = 10.0f;
+constexpr float KI = 0.2;
+constexpr float KD = 2.0f;
 constexpr float ANGLE_OFFSET = 0.0f;
 
 #define drehachse ax //auswhählen zwischen ax ay und az
