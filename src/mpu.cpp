@@ -80,6 +80,7 @@ void MPU::calibrate() {
           sum += angles.drehachse;
      }
      offset = sum /100.0f;
+     lastTime = millis();
 }
 
 float MPU::getError(){

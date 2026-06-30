@@ -34,10 +34,10 @@ void Balancer::stop() {
 void Balancer::update() {
     float error = _mpu.getError();
     float output = _pid.output(error);
-    output = constrain(output, -150, 150);
+    output = constrain(output, -255, 255);
 
-    if (output > 0 && output < 65) output = 65;
-    if (output < 0 && output > -65) output = -65;
+    if (output > 0 && output < 23) output = 23;
+    if (output < 0 && output > -23) output = -23;
 
     if (output > 0) {
         forward(int(output));

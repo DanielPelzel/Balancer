@@ -23,7 +23,7 @@
 
 //MPU 6050
 #define SCL_PIN 22
-#define SDA_PIN 21
+#define SDA_PIN 23
 
 #define PWM_FREQ 1000
 #define PWM_RES  8
@@ -40,7 +40,7 @@ constexpr float KI = 0.2;
 constexpr float KD = 2.0f;
 constexpr float ANGLE_OFFSET = 0.0f;
 
-#define drehachse ax //auswhählen zwischen ax ay und az
+#define drehachse az //auswhählen zwischen ax ay und az
 
 
 #endif

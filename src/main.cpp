@@ -22,4 +22,6 @@ void loop() {
     balancer.update();
     float angle = mpu.getError();
     com.sendData(angle);
+    delay(10);
+
 }

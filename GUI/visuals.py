@@ -1,3 +1,8 @@
+"""
+Echtzeit-Winkelanzeige für den Balancer.
+Liest den Neigungswinkel vom ESP32 (seriell) und zeigt ihn als scrollenden Graph an.
+"""
+
 import PyQt5
 from PyQt5.QtCore import QRunnable, QObject, pyqtSignal, QThread
 import serial.tools.list_ports
@@ -20,8 +25,9 @@ port = findPort()
 
 
 class Worker(QThread):
+    """Hintergrund-Thread: liest Winkelwerte (Float, eine Zeile pro Wert) vom seriellen Port und sendet sie per Signal."""
 
-    data = pyqtSignal(float)
+    data = pyqtSignal(float)  # Signal: neuer Winkelwert → wird an update_plot weitergeleitet
 
     def __init__(self):
         super().__init__()
@@ -29,6 +35,7 @@ class Worker(QThread):
         self.running = True
 
     def run(self):
+        """Liest in einer Schleife Zeilen vom ESP32, parst den Float und sendet ihn als Signal."""
         while self.running:
             try:
                 line = self.ser.readline().decode().strip()
@@ -38,6 +45,7 @@ class Worker(QThread):
                 pass
 
     def stop(self):
+        """Beendet den Thread sauber und schließt den seriellen Port."""
         self.running = False
         self.ser.close()
         self.wait()
@@ -46,6 +54,8 @@ class Worker(QThread):
 
 
 class MainWindow(QMainWindow):
+    """Hauptfenster: zeigt Winkel als gelbe Kurve (±90°), rote Linie bei 0° = Gleichgewicht, X-Achse scrollt (letzte 10 s)."""
+
     def __init__(self):
         super().__init__()
 
@@ -74,6 +84,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.plot)
 
     def update_plot(self, angle):
+        """Neuen Winkel anhängen, Punkte älter als 10 s löschen (Sliding Window), Kurve neu zeichnen."""
         self.angle_data.append(angle)
         self.current_time = time.time() - self.start_time 
         self.time_data.append(self.current_time)
@@ -88,6 +99,7 @@ class MainWindow(QMainWindow):
 
 
     def closeEvent(self, event):
+        """Fenster schließen → Worker-Thread sauber stoppen."""
         self.worker.stop()
         event.accept()
 
