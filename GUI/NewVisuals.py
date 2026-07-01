@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         self.angle_plot.setLabel("bottom", "t")
         self.angle_plot.setLabel("left", "angle")
         self.angle_plot.setYRange(-90, 90)
-        self.curve = self.angle_plot.plot([], pen = "#006400")
+        self.curve = self.angle_plot.plot([], pen = pg.mkPen("#006400", width = 2))
         self.angle_plot.addLine(y=0, pen = pg.mkPen(color = "r", width = 1))
         self.angle_plot.getPlotItem().getViewBox().setDefaultPadding(0)
 
@@ -66,19 +66,19 @@ class MainWindow(QMainWindow):
 
         #--P Spinbox Widget---
         self.p_widget = QDoubleSpinBox()
-        self.p_widget.setRange(0,50)
+        self.p_widget.setRange(0,200)
         self.p_widget.setValue(5)
         self.p_widget.valueChanged.connect(self.send_pid)
 
         #---I SPinbox Widget---
         self.i_widget = QDoubleSpinBox()
-        self.i_widget.setRange(0, 50)
+        self.i_widget.setRange(0, 200)
         self.i_widget.setValue(0)
         self.i_widget.valueChanged.connect(self.send_pid)
 
         #---d Spinbox Widget---
         self.d_widget = QDoubleSpinBox()
-        self.d_widget.setRange(0, 50)
+        self.d_widget.setRange(0, 200)
         self.d_widget.setValue(0)
         self.d_widget.valueChanged.connect(self.send_pid)
 
@@ -86,7 +86,6 @@ class MainWindow(QMainWindow):
 
 
         #---Layout---
-        #Todo Layout erstellen
         vertikal_layout = QVBoxLayout()
         horizontal_layout1 = QHBoxLayout()
         horizontal_layout2 = QHBoxLayout()
@@ -185,9 +184,14 @@ class Worker(QThread):
 
     def run(self):
         #---Daten Empfangen---
+        if self.ser is None:
+            return
+
         while True:
             line = self.ser.readline().decode().strip()
             parts = line.split(",")
+            if len(parts) < 2:
+                continue
             angle =float(parts[0])
             output = float(parts[1])
             self.angle.emit(angle, output)   #Sendet daten an MainWindwo

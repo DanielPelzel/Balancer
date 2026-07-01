@@ -4,10 +4,10 @@
 
 //Pin Belegungen
 //In
-#define In4 26
-#define In3 25
-#define In2 33
-#define  In1 32
+#define In4 25
+#define In3 26
+#define In2 32
+#define  In1 33
 
 //PWM
 #define ENB 14
@@ -35,12 +35,14 @@
 #define MPU_gyro_Range MPU6050_RANGE_500_DEG
 #define MPU_filter_bandwidth MPU6050_BAND_44_HZ
 
-constexpr float KP = 10.0f;
-constexpr float KI = 0.2;
-constexpr float KD = 2.0f;
+constexpr float KP = 5.0f;
+constexpr float KI = 0.0f;
+constexpr float KD = 0.0f;
 constexpr float ANGLE_OFFSET = 0.0f;
 
-#define drehachse az //auswhählen zwischen ax ay und az
+#define drehachse ay //auswhählen zwischen ax ay und az
+
+#define TOTPUNKT 40
 
 
 #endif
