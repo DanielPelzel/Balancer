@@ -31,7 +31,7 @@ void Balancer::stop() {
     _motorLinks.stop();
 }
 
-void Balancer::update() {
+float Balancer::update() {
     float error = _mpu.getError();
     float output = _pid.output(error);
     output = constrain(output, -255, 255);
@@ -46,6 +46,7 @@ void Balancer::update() {
     }else{
         stop();
     }
+    return output;
 }
 
 void Balancer::setPID(float kp, float ki, float kd) {

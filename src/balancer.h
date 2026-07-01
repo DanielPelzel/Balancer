@@ -18,6 +18,6 @@ public:
     void forward(int speed);
     void backward(int speed);
     void stop();
-    void update();
+    float update();
     void setPID(float kp, float ki, float kd);
 };

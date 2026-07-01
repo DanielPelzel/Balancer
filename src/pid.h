@@ -11,5 +11,6 @@ private:
 public:
     Pid(float kp, float ki, float kd);
     float output(float error);
+    void setGains(float kp, float ki, float kd);
 
 };

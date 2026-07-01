@@ -27,3 +27,9 @@ float Pid::output(float error) {
 
     return p + i + d;
 }
+
+void Pid::setGains(float kp, float ki, float kd) {
+    _kp = kp;
+    _ki = ki;
+    _kd = kd;
+}

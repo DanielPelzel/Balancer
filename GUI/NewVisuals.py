@@ -2,7 +2,7 @@ import queue
 
 import PyQt5
 import pyqtgraph as pg
-from PyQt5.QtCore import pyqtSignal, QThread, QSettings
+from PyQt5.QtCore import pyqtSignal, QThread, QSettings, Qt
 import serial
 from PyQt5.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QHBoxLayout, QSpinBox, QWidget, QLabel, \
     QDoubleSpinBox
@@ -40,6 +40,11 @@ class MainWindow(QMainWindow):
         self.worker.angle.connect(self.update_plot)
 
 
+
+
+        #---Motor Output Widget
+        self.output_Widget = QLabel("Motor output = 0")
+        self.output_Widget.setAlignment(Qt.AlignCenter)
 
         #---PAngle-lot---
         #TODO Plot erstellen
@@ -86,6 +91,7 @@ class MainWindow(QMainWindow):
         horizontal_layout1 = QHBoxLayout()
         horizontal_layout2 = QHBoxLayout()
 
+        vertikal_layout.addWidget(self.output_Widget)
         vertikal_layout.addWidget(self.angle_plot)
         vertikal_layout.addLayout(horizontal_layout1)
         vertikal_layout.addLayout(horizontal_layout2)
@@ -108,12 +114,14 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
 
-    def update_plot(self, angle):
+    def update_plot(self, angle, motor_output):
         """
         updated die Kurve vom Plot immer wenn ein neuer Wert per ser empfangen wid
         :param angle:
         :return:
         """
+
+        self.motor_output = motor_output
 
         self.current_time = time.time() - self.startTime
 
@@ -128,6 +136,10 @@ class MainWindow(QMainWindow):
 
         self.curve.setData(self.time_data, self.angle_data)
         self.angle_plot.setXRange(self.current_time-10, self.current_time)
+
+
+        #---Updatge Motor output plot
+        self.output_Widget.setText(f"Motor Output: {self.motor_output:.1f}")
 
     def send_pid(self, angle):
         """Holt dich die PID DAaten sobald ein Wert geöndert wir dund sendet die per queue an den Worker thread """
@@ -162,7 +174,7 @@ class MainWindow(QMainWindow):
 
 
 class Worker(QThread):
-    angle = pyqtSignal(float)
+    angle = pyqtSignal(float, float)
     def __init__(self, ser):
         super().__init__()
 
@@ -175,8 +187,10 @@ class Worker(QThread):
         #---Daten Empfangen---
         while True:
             line = self.ser.readline().decode().strip()
-            angle = float(line)
-            self.angle.emit(angle) #Sendet daten an MainWindwo
+            parts = line.split(",")
+            angle =float(parts[0])
+            output = float(parts[1])
+            self.angle.emit(angle, output)   #Sendet daten an MainWindwo
 
             #---Daten Senden---
             if not self.queue.empty():

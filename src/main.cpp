@@ -19,9 +19,10 @@ void setup() {
     mpu.calibrate();
 }
 void loop() {
-    balancer.update();
+    float output = balancer.update();
     float angle = mpu.getError();
-    com.sendData(angle);
+    com.sendData(angle, output);
+    com.receiveData(balancer);
     delay(10);
 
 }
