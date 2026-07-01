@@ -20,4 +20,5 @@ public:
     void stop();
     float update();
     void setPID(float kp, float ki, float kd);
+    float getAngle() { return _mpu.getError(); }
 };

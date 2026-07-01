@@ -4,10 +4,10 @@
 
 //Pin Belegungen
 //In
-#define In4 25
-#define In3 26
-#define In2 32
-#define  In1 33
+#define In4 26
+#define In3 25
+#define In2 33
+#define  In1 32
 
 //PWM
 #define ENB 14
@@ -40,7 +40,7 @@ constexpr float KI = 0.0f;
 constexpr float KD = 0.0f;
 constexpr float ANGLE_OFFSET = 0.0f;
 
-#define drehachse ay //auswhählen zwischen ax ay und az
+#define drehachse az //auswhählen zwischen ax ay und az
 
 #define TOTPUNKT 40
 

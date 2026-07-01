@@ -36,8 +36,8 @@ float Balancer::update() {
     float output = _pid.output(error);
     output = constrain(output, -255, 255);
 
-    if (output > 0 && output < TOTPUNKT) output = TOTPUNKT;
-    if (output < 0 && output > -TOTPUNKT) output = -TOTPUNKT;
+    if (output > 0) output = map(output, 0, 255, TOTPUNKT, 255);
+    if (output < 0) output = map(output, -255, 0, -255, -TOTPUNKT);
 
     if (output > 0) {
         forward(int(output));

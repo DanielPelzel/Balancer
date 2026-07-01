@@ -1,28 +1,24 @@
-//
-// Created by daniel-pelzel on 11.05.26.
-//
-
 #include <Arduino.h>
 #include "config.h"
-#include "mpu.h"
-#include "communiation.h"
 #include "balancer.h"
+#include "communiation.h"
 
-MPU mpu;
-Communication com;
 Balancer balancer;
+Communication com;
 
 void setup() {
     Serial.begin(115200);
     balancer.init();
-    mpu.init();
-    mpu.calibrate();
 }
+
 void loop() {
     float output = balancer.update();
-    float angle = mpu.getError();
-    com.sendData(angle, output);
-    com.receiveData(balancer);
-    delay(10);
 
+    static unsigned long lastPrint = 0;
+    if (millis() - lastPrint > 20) {
+        com.sendData(balancer.getAngle(), output);
+        lastPrint = millis();
+    }
+    com.receiveData(balancer);
+    delay(5);
 }
