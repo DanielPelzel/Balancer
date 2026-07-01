@@ -47,3 +47,7 @@ void Balancer::update() {
         stop();
     }
 }
+
+void Balancer::setPID(float kp, float ki, float kd) {
+    _pid.setGains(kp, ki, kd);
+}

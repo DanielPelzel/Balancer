@@ -19,4 +19,5 @@ public:
     void backward(int speed);
     void stop();
     void update();
+    void setPID(float kp, float ki, float kd);
 };
