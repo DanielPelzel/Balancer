@@ -24,5 +24,11 @@ Self Balancing Robot, driving on two wheels
 
 [Motor Calibration Tool](https://github.com/DanielPelzel/motor-calibration-tool)
 
+## complicated PID tuning 
+**Problem:** The PID tuning was very comlicated, because after every try, I had to edit my code and flash it again
+**Solution:** As Solution I build an PyQt5 GUI to monitor the PWM output and Angle of my Robot and tweak the PID Values while running the robot 
+
+
+
 ## Schematic 
 ![Schematic](docs/Schematic.png)
