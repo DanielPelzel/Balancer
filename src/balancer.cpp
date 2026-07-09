@@ -5,13 +5,15 @@
 #include "pid.h"
 #include "mpu.h"
 Balancer::Balancer()
-    :_motorLinks(In1, In2, PWM_CH_A, ENA)
-    ,_motorRechts(In3, In4, PWM_CH_B,ENB)
+    :_motorLinks(In1, In2, PWM_CH_A1, PWM_CH_A2)
+    ,_motorRechts(In3, In4, PWM_CH_B1, PWM_CH_B2)
     , _mpu()
     , _pid(KP, KI, KD)
 { }
 
 void Balancer::init() {
+    pinMode(SLEEP_PIN, OUTPUT);
+    digitalWrite(SLEEP_PIN, HIGH);
     _mpu.init();
     _mpu.calibrate();
 }

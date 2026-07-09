@@ -4,22 +4,12 @@
 
 //Pin Belegungen
 //In
-#define In4 26
-#define In3 25
+#define In4 25
+#define In3 26
 #define In2 33
 #define  In1 32
 
-//PWM
-#define ENB 14
-#define ENA 13
-
-//Encoder rechts
-#define Enc_A_R 36
-#define Enc_B_R 39
-
-//Encoder links
-#define Enc_A_L 35
-#define Enc_B_L 34
+#define SLEEP_PIN 12 
 
 //MPU 6050
 #define SCL_PIN 22
@@ -27,8 +17,10 @@
 
 #define PWM_FREQ 1000
 #define PWM_RES  8
-#define PWM_CH_A 0
-#define PWM_CH_B 1
+#define PWM_CH_A1 0
+#define PWM_CH_A2 1
+#define PWM_CH_B1 2
+#define PWM_CH_B2 3
 
 //MPU Range
 #define MPU_accel_Range MPU6050_RANGE_4_G

@@ -3,32 +3,29 @@
 #include <Arduino.h>
 #include "config.h"
 
-Motor::Motor(int in1, int in2, int pwmKanal, int enaPin) {
+Motor::Motor(int in1, int in2, int pwmCh1, int pwmCh2) {
     _in1 = in1;
     _in2 = in2;
-    _pwmKanal = pwmKanal;
-    _enaPin = enaPin;
+    _pwmCh1 = pwmCh1;
+    _pwmCh2 = pwmCh2;
 
-    pinMode(_in1, OUTPUT);
-    pinMode(_in2, OUTPUT);
-    ledcSetup(_pwmKanal, PWM_FREQ, PWM_RES);
-    ledcAttachPin(_enaPin, _pwmKanal);
+    ledcSetup(_pwmCh1, PWM_FREQ, PWM_RES);
+    ledcSetup(_pwmCh2, PWM_FREQ, PWM_RES);
+    ledcAttachPin(_in1, _pwmCh1);
+    ledcAttachPin(_in2, _pwmCh2);
 }
 
 void Motor::forward(int speed) {
-    digitalWrite(_in1, HIGH);
-    digitalWrite(_in2, LOW);
-    ledcWrite(_pwmKanal, speed);
+    ledcWrite(_pwmCh1, speed);
+    ledcWrite(_pwmCh2, 0);
 }
+
 void Motor::backward(int speed) {
-    digitalWrite(_in1, LOW);
-    digitalWrite(_in2, HIGH);
-    ledcWrite(_pwmKanal, speed);
+    ledcWrite(_pwmCh1, 0);
+    ledcWrite(_pwmCh2, speed);
 }
 
 void Motor::stop() {
-    digitalWrite(_in1, LOW);
-    digitalWrite(_in2, LOW);
-    ledcWrite(_pwmKanal, 0);
+    ledcWrite(_pwmCh1, 0);
+    ledcWrite(_pwmCh2, 0);
 }
-
